@@ -17,12 +17,27 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const server = require("./src/app.js");
+const { conn, Country } = require("./src/db.js");
+const axios = require ('axios');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: true }).then(async () => {
+  const apiURL = await axios.get("https://restcountries.eu/rest/v2/all");
+  let apiInfo = apiURL.data.map((p) => {
+    return {
+      id: p.alpha3Code,
+      name: p.name,
+      flag: p.flag,
+      continent: p.region,
+      capital: p.capital,
+      subregion: p.subregion,
+      area: p.area,
+      population: p.population,
+    };
+  });
+  await Country.bulkCreate(apiInfo);
   server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+    console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
 });

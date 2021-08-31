@@ -5,8 +5,8 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('country', {
     id: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.CHAR(3),
+      allowNull: false, // por defecto
       primaryKey: true,
     },
     name: {
@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
       
     },
     area: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       
     },
     population: {
