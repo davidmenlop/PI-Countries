@@ -4,19 +4,19 @@ const { Country, Activity, country_activity } = require("../db.js");
 const axios = require("axios");
 
 router.get("/", async (req, res) => {
-  const name = req.query.name;
-  const countries = await Country.findAll({
+  const name = req.query.name;   // tomo el parametro name por query
+  const countries = await Country.findAll({  // Hago una busqueda en mi BD incluyendo la actividad
     include: Activity,
   });
-  if (name) {
+  if (name) { // si tengo name, filtro los elementos
     let countriesName = await countries.filter((el) =>
       el.name.toLowerCase().includes(name.toLowerCase())
     );
-    countriesName.length
+    countriesName.length // si hay elementos en el filtro los devuelvo
       ? res.status(200).send(countriesName)
       : res.status(404).send("Pais no encontrado");
   } else {
-    res.status(200).send(countries);
+    res.status(200).send(countries); // en caso de no tener un name, envio todos los elementos de mi BD de countries. 
   }
 });
 
