@@ -1,14 +1,22 @@
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { traerPaises } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
+import Paginado from "./Paginado";
 
 export default function Home() {
-    
   const dispatch = useDispatch();
   const todosPaises = useSelector((state) => state.paises);
+  const [pagActual, setPagActual] = useState(1); // Mi pagina actual sera 1
+  const [paisesPorPag, setPaisesPorPag] = useState(10); // Cantidad de paises que quiero por pag.
+  const indexOfUltimoPais = pagActual * paisesPorPag; // 10
+  const indexOfPrimerPais = indexOfUltimoPais - paisesPorPag; // 0
+  const paisActual = todosPaises.slice(indexOfPrimerPais, indexOfUltimoPais);
+
+  const paginado = (pagNumber) => {
+    setPagActual(pagNumber);
+  };
 
   useEffect(() => {
     dispatch(traerPaises());
@@ -47,12 +55,22 @@ export default function Home() {
         <select>
           <option value="actividad">Actividad</option>
         </select>
+        <Paginado
+          paisesPorPag={paisesPorPag}
+          todosPaises={todosPaises.length}
+          paginado={paginado}
+        ></Paginado>
 
-        {todosPaises?.map((el) => {
+        {paisActual?.map((el) => {
           return (
             <div>
               <Link to={"/home"}>
-                <Card name={el.name} img={el.flag} continent={el.continent} key={el.id}/>
+                <Card
+                  name={el.name}
+                  img={el.flag}
+                  continent={el.continent}
+                  key={el.id}
+                />
               </Link>
             </div>
           );
