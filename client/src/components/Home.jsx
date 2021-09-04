@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { traerPaises } from "../actions";
+import { filterContinentes, traerPaises } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
@@ -27,6 +27,10 @@ export default function Home() {
     dispatch(traerPaises());
   }
 
+  function handleFilterContinent(e){
+      dispatch(filterContinentes(e.target.value))
+  }
+
   return (
     <div>
       <Link to="/actividades">Crear Actividad</Link>
@@ -43,8 +47,8 @@ export default function Home() {
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
         </select>
-        <select>
-          <option value="all">Todos</option>
+        <select onChange={e => handleFilterContinent(e)}>
+          <option value="All">Todos</option>
           <option value="Americas">Americas</option>
           <option value="Asia">Asia</option>
           <option value="Europe">Europa</option>
@@ -63,14 +67,9 @@ export default function Home() {
 
         {paisActual?.map((el) => {
           return (
-            <div>
+            <div key={el.id}>
               <Link to={"/home"}>
-                <Card
-                  name={el.name}
-                  img={el.flag}
-                  continent={el.continent}
-                  key={el.id}
-                />
+                <Card name={el.name} img={el.flag} continent={el.continent} />
               </Link>
             </div>
           );

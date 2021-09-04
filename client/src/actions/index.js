@@ -9,3 +9,11 @@ export function traerPaises(){
         })
     }
 }
+
+export function filterContinentes(payload){
+    console.log(payload)
+    return{
+        type: 'FILTER_BY_REGION',
+        payload
+    }
+}
