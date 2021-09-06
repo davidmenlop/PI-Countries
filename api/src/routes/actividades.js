@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   res.json(activity);
 });
 
-router.post("/", async (req, res) => {
+/* router.post("/activity", async (req, res) => {
   try {
     const { name, level, time, season, paises } = req.body;
     let [create, hola] = await Activity.findOrCreate({
@@ -27,6 +27,28 @@ router.post("/", async (req, res) => {
     res.send(create);
   } catch (error) {
     res.send(error);
+  }
+}); */
+
+router.post("/", async (req, res) => {
+  const { name, level, time, season, id } = req.body;
+  const createdActivity = await Activity.create({
+    id,
+    name,
+    level,
+    time,
+    season,
+  });
+  try {
+    const countries = await Country.findAll({
+      where: {
+        id:id
+      }
+    })
+    await createdActivity.addCountries(countries)
+    return res.send("agregado");
+  } catch (err) {
+    return res.sendStatus(404);
   }
 });
 

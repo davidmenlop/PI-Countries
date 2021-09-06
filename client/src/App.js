@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from './components/LandingPage';
 import Home from "./components/Home";
+import Detail from "./components/Detail";
 
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <Route path='/home' component={Home}/>
+          <Route exact path='/home' component={Home}/>
+          <Route exact path='/home/:id' component={Detail}/>
         </Switch>
         <h1>Henry Countries</h1>
       </div>

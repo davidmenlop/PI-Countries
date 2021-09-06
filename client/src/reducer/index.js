@@ -1,7 +1,8 @@
 
 const initialState = {
     paises: [],
-    allContinentes: []
+    allContinentes: [],
+    detail: {}
 }
 
 function rootReducer(state = initialState, action){
@@ -13,13 +14,22 @@ function rootReducer(state = initialState, action){
 
         case 'FILTER_BY_REGION':
             const allPaises = state.allContinentes
-            console.log(allPaises)
+            //console.log(allPaises)
             const contiFiltrados = action.payload === "All" ? allPaises : allPaises.filter(el => el.continent === action.payload);
-            console.log(contiFiltrados)
+            //console.log(contiFiltrados)
             return{
                 ...state, paises: contiFiltrados/* state.allContinentes.filter(el => el.continent === action.payload) */
             }
-            
+        
+        case 'GET_DETAIL':
+            return{
+                ...state, detail: action.payload
+            }    
+
+        case 'GET_QUERY_COUNTRY':
+            return{
+                ...state, paises: action.payload
+            }
         default:
             return state;
     }
