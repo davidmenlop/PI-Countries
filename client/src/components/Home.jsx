@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detallePais, filterContinentes, traerPaises } from "../actions";
+import {
+  detallePais,
+  filterContinentes,
+  traerPaises,
+  filtrarActividad,
+  traerActividad,
+} from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
-
+import SearchBar from "./SearchBar";
 
 export default function Home() {
   const dispatch = useDispatch();
   const todosPaises = useSelector((state) => state.paises);
+  const todasActividades = useSelector((state) => state.actividades);
   const [pagActual, setPagActual] = useState(1); // Mi pagina actual sera 1
   const [paisesPorPag, setPaisesPorPag] = useState(10); // Cantidad de paises que quiero por pag.
+  const [activity, setActivity] = useState(null);
   const indexOfUltimoPais = pagActual * paisesPorPag; // 10
   const indexOfPrimerPais = indexOfUltimoPais - paisesPorPag; // 0
   const paisActual = todosPaises.slice(indexOfPrimerPais, indexOfUltimoPais);
@@ -21,6 +29,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(traerPaises());
+    dispatch(traerActividad());
   }, [dispatch]);
 
   function handleClick(e) {
@@ -30,6 +39,17 @@ export default function Home() {
 
   function handleFilterContinent(e) {
     dispatch(filterContinentes(e.target.value));
+  }
+
+  function handleActivity(e) {
+    if (e.target.value === "All") {
+      dispatch(traerPaises());
+      setPagActual(1);
+    } else {
+      dispatch(filtrarActividad(e.target.value));
+      setActivity(e.target.value)
+      setPagActual(1);
+    }
   }
 
   return (
@@ -57,9 +77,15 @@ export default function Home() {
           <option value="Oceania">Oceania</option>
           <option value="Polar">Polar</option>
         </select>
-        <select>
-          <option value="actividad">Actividad</option>
+        <select name="actividad" onChange={(e) => handleActivity(e)}>
+          <option defaulValue value="All">
+            Todas
+          </option>
+          {todasActividades?.map((e) => (
+            <option value={e.name}>{e.name}</option>
+          ))}
         </select>
+        <SearchBar />
         <Paginado
           paisesPorPag={paisesPorPag}
           todosPaises={todosPaises.length}
@@ -73,8 +99,13 @@ export default function Home() {
                 to={`/home/${el.id}`}
                 onClick={() => dispatch(detallePais(el.id))}
               >
-                
-                <Card id={el.id} name={el.name} img={el.flag} continent={el.continent} activities={el.activities}/>
+                <Card
+                  id={el.id}
+                  name={el.name}
+                  img={el.flag}
+                  continent={el.continent}
+                  activities={el.activities}
+                />
               </Link>
             </div>
           );

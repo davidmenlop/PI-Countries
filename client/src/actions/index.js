@@ -30,7 +30,7 @@ export function detallePais(id){
     }
 }
 
-export function detallePaises(name){
+export function buscarPaises(name){
     return async function(dispatch){
         try{
           var queryPaises = await axios.get('http://localhost:3001/countries?name=' + name);  
@@ -42,5 +42,26 @@ export function detallePaises(name){
             console.log(err)
         }
         
+    }
+}
+
+export function traerActividad(){
+    return async function(dispatch){
+        try{
+            const actividad = await axios.get('http://localhost:3001/actividades');
+            return dispatch({
+                type: 'GET_ACTIVIDADES',
+                payload: actividad.data
+            })
+        } catch(err){
+            console.log(err)
+        }
+    }
+}
+
+export function filtrarActividad(payload){
+    return{
+        type: 'FILTER_BY_ACTIVITY',
+        payload
     }
 }

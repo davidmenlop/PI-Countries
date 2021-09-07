@@ -31,18 +31,19 @@ router.get("/", async (req, res) => {
 }); */
 
 router.post("/", async (req, res) => {
-  const { name, level, time, season, id } = req.body;
+  const { name, level, time, season, id, pais } = req.body;
   const createdActivity = await Activity.create({
     id,
     name,
     level,
     time,
     season,
+    pais
   });
   try {
     const countries = await Country.findAll({
       where: {
-        id:id
+        id: pais
       }
     })
     await createdActivity.addCountries(countries)
