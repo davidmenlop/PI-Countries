@@ -59,9 +59,31 @@ export function traerActividad(){
     }
 }
 
+export function postActividad(payload){
+    return async function(){
+        const res = await axios.post('http://localhost:3001/actividades', payload);
+        console.log(res)
+        return res;
+    }
+}
+
 export function filtrarActividad(payload){
     return{
         type: 'FILTER_BY_ACTIVITY',
+        payload
+    }
+}
+
+export function orderByName(payload){
+    return{
+        type: 'ORDER_BY_NAME',
+        payload
+    }
+}
+
+export function orderByPob(payload){
+    return{
+        type: 'ORDER_BY_POB',
         payload
     }
 }

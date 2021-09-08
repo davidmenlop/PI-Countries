@@ -48,6 +48,17 @@ function rootReducer(state = initialState, action) {
         allActividades: action.payload,
       };
 
+    case "GET_ACTIVITY":
+      return {
+        ...state,
+        paises: action.payload,
+      };
+
+    case "POST_ACTIVIDAD":
+      return {
+        ...state,
+      };
+
     case "FILTER_BY_ACTIVITY":
       const prueba = state.allContinentes.filter((el) => {
         var y = el.activities.find(
@@ -58,6 +69,58 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         paises: prueba,
+      };
+
+    case "ORDER_BY_NAME":
+      let sortedArr =
+        action.payload === "asc"
+          ? state.paises.sort(function (a, b) {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
+            })
+          : state.paises.sort(function (a, b) {
+              if (a.name > b.name) {
+                return -1;
+              }
+              if (a.name < b.name) {
+                return 1;
+              }
+              return 0;
+            });
+      return {
+        ...state,
+        paises: sortedArr,
+      };
+
+    case "ORDER_BY_POB":
+      let sortedPob =
+        action.payload === "men"
+          ? state.paises.sort(function (a, b) {
+              if (a.population > b.population) {
+                return 1;
+              }
+              if (a.population < b.population) {
+                return -1;
+              }
+              return 0;
+            })
+          : state.paises.sort(function (a, b) {
+              if (a.population > b.population) {
+                return -1;
+              }
+              if (a.population < b.population) {
+                return 1;
+              }
+              return 0;
+            });
+      return {
+        ...state,
+        paises: sortedPob,
       };
 
     default:

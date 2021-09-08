@@ -6,6 +6,8 @@ import {
   traerPaises,
   filtrarActividad,
   traerActividad,
+  orderByName,
+  orderByPob
 } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
@@ -16,6 +18,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const todosPaises = useSelector((state) => state.paises);
   const todasActividades = useSelector((state) => state.actividades);
+  const [orden, setOrden] = useState("");
   const [pagActual, setPagActual] = useState(1); // Mi pagina actual sera 1
   const [paisesPorPag, setPaisesPorPag] = useState(10); // Cantidad de paises que quiero por pag.
   const [activity, setActivity] = useState(null);
@@ -47,9 +50,23 @@ export default function Home() {
       setPagActual(1);
     } else {
       dispatch(filtrarActividad(e.target.value));
-      setActivity(e.target.value)
+      setActivity(e.target.value);
       setPagActual(1);
     }
+  }
+
+  function handleOrder(e) {
+    e.preventDefault();
+    dispatch(orderByName(e.target.value));
+    setPagActual(1);
+    setOrden(`Ordenado ${e.target.value}`);
+  }
+
+  function handleOrderPob(e) {
+    e.preventDefault();
+    dispatch(orderByPob(e.target.value));
+    setPagActual(1);
+    setOrden(`Ordenado ${e.target.value}`);
   }
 
   return (
@@ -64,9 +81,13 @@ export default function Home() {
         Cargar Paises
       </button>
       <div>
-        <select>
+        <select onChange={e=>handleOrder(e)}>
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
+        </select>
+        <select onChange={e=>handleOrderPob(e)}>
+          <option value="may">Mayor</option>
+          <option value="men">Menor</option>
         </select>
         <select onChange={(e) => handleFilterContinent(e)}>
           <option value="All">Todos</option>
@@ -78,11 +99,11 @@ export default function Home() {
           <option value="Polar">Polar</option>
         </select>
         <select name="actividad" onChange={(e) => handleActivity(e)}>
-          <option defaulValue value="All">
+          <option defaultValue value="All">
             Todas
           </option>
-          {todasActividades?.map((e) => (
-            <option value={e.name}>{e.name}</option>
+          {todasActividades?.map((e) => ( 
+            <option key={e.id} value={e.name}>{e.name}</option>
           ))}
         </select>
         <SearchBar />
