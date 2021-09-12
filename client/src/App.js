@@ -16,7 +16,7 @@ function App() {
           <Route exact path='/actividades' component={Actividades}/>
           <Route exact path='/home/:id' component={Detail}/>
         </Switch>
-        <h1>Henry Countries</h1>
+        {/* <h1>Henry Countries</h1> */}
       </div>
     </BrowserRouter>
   );

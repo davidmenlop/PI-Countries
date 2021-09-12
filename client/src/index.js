@@ -5,9 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import store from './store'
+import video from './components/video/Pexels.mp4'
 
 ReactDOM.render(
   <Provider store={store}>
+     <video autoPlay loop muted
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          left: '0',
+          objectFit: 'cover',
+          zIndex: '-1'
+
+        }}
+        >
+          <source src={video} type='video/mp4'/>
+        </video>
     <React.StrictMode>
     <App />
   </React.StrictMode>

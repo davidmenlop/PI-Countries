@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import style from "./ActivityCreate.module.css";
+import { useHistory } from "react-router-dom";
+import {Link} from 'react-router-dom'
+
 
 export default function ActivityCreate() {
   const countries = useSelector((state) => state.allContinentes);
-
+  const history = useHistory();
   const [validate, setValidate] = useState({});
 
   const [activity, setActivity] = useState({
@@ -81,6 +84,7 @@ export default function ActivityCreate() {
         console.log(err);
       }
     }
+    history.push('/home')
   }
 
   function cancelar() {
@@ -97,8 +101,9 @@ export default function ActivityCreate() {
   //const { name, dificultad, duracion, temporada } = req.body;
   return (
     <div>
-      <div>
+      <div className={style.box}>
         <h2 className={style.title}>Crear Actividad Turistica</h2>
+
         <form onSubmit={(e) => handleSubmit(e)} className={style.ent}>
           <label htmlFor=""> Nombre:</label>
           <input
@@ -165,7 +170,7 @@ export default function ActivityCreate() {
           </select>
         </form>
       </div>
-      <table className={style.table}>
+      <table key={activity.name} className={style.table}>
         <label>Paises donde se realiza:</label>
         <input
           type="datalist"
@@ -175,7 +180,8 @@ export default function ActivityCreate() {
           onChange={(e) => onInputChange(e)}
         />
         <datalist id="paises">
-          {countries && countries.map((e) => <option value={e.name} />)}
+          {countries &&
+            countries.map((e) => <option key={e.id} value={e.name} />)}
         </datalist>
         <button onClick={() => agregarPais()}> Agregar Pais</button>
 
@@ -183,7 +189,7 @@ export default function ActivityCreate() {
           <div>
             {" "}
             <p> {el} </p>
-            <button value={el} onClick={() => borrarPais(el)}>
+            <button key={el.name} value={el} onClick={() => borrarPais(el)}>
               X
             </button>
           </div>
@@ -197,6 +203,12 @@ export default function ActivityCreate() {
       <button onClick={() => cancelar()} className={style.btn}>
         Cancelar
       </button>
+      <Link to={'/Home'}>
+      <button className={style.btn}>
+        Inicio
+      </button>
+      </Link>
+      
     </div>
   );
 }

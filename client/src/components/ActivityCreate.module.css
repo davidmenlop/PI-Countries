@@ -1,22 +1,27 @@
 .title{
         font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         padding: 5px;
+        margin-top: 0;
+        color: white;
+        text-shadow: 2px 2px 2px #363636;
 }
 
 .ent{
         width: 400px;
-        background-color: #E7E7E7;
+        background-color: #ffffff3f;
         display: inline-table;
-
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
 
 }
 
 .btn{ 
         display: inline-table;
         padding: 50px;
-	background-color: #0095eb;
+	background-color: #6e6e6e62;
 	padding: 10px 45px 10px 45px;
 	color: 	white;
+        border-radius: 50px;
      
 }
 .btn:hover{
@@ -27,8 +32,10 @@
 
 .table{
         padding: 50px;
-        background-color: #E7E7E7;;
+        background-color: #ffffff3f;;
         display: inline-table;
         width: 400px;
-
+        
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
 }
