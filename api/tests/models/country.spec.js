@@ -15,8 +15,15 @@ describe('Country model', () => {
           .catch(() => done());
       });
       it('should work when its a valid name', () => {
-        Country.create({ name: 'Argentina' });
+        Country.create({ name: 'Colombia' });
       });
     });
+    describe('capital',()=>{
+      it('Mostrar un error si la capital es null',(done)=>{
+        Country.create({})
+        .then(()=>done(new Error ('Se requiere una Capital')))
+        .catch(()=>done());
+        });
+    })
   });
 });

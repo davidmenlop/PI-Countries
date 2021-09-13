@@ -6,8 +6,19 @@ const { Country, conn } = require('../../src/db.js');
 
 const agent = session(app);
 const country = {
-  name: 'Argentina',
+  id: "COL",
+  name: 'Colombia',
+  flag: 'https://restcountries.eu/data/col.svg',
+  capital: 'Bogotá',
+  continent: 'Americas'
 };
+
+const activity = {
+  name:'sky',
+  level:'3',
+  time: '30',
+  season: 'Invierno'
+}
 
 describe('Country routes', () => {
   before(() => conn.authenticate()
@@ -15,10 +26,15 @@ describe('Country routes', () => {
     console.error('Unable to connect to the database:', err);
   }));
   beforeEach(() => Country.sync({ force: true })
-    .then(() => Country.create(pokemon)));
+    .then(() => Country.create(country)));
   describe('GET /countries', () => {
     it('should get 200', () =>
       agent.get('/countries').expect(200)
     );
   });
+
+  describe('GET /countries/:id',()=>{
+    it('should get 200',()=>
+    agent.get('/countries/COL').expect(200))
+  })
 });
