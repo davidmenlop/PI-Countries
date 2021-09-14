@@ -32,8 +32,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { name, level, time, season, /* id */ paises } = req.body;
-  console.log(time)
-  console.log(paises)
+  //console.log(time)
+  //console.log(paises)
   const createdActivity = await Activity.create({
     /* id, */
     name,

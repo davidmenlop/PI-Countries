@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import style from "./Detail.module.css";
 import { Link } from "react-router-dom";
 
-export default function Detail(id) {
+export default function Detail() {
   const paises = useSelector((store) => store.detail);
   return (
     <div className={style.box}>
@@ -33,27 +33,29 @@ export default function Detail(id) {
             <label htmlFor="">Poblacion:</label>
             <h3 className={style.h3}>{paises[0].population}</h3>
           </div>
-          <div >
+          <div>
             <h3>
               Actividades :{" "}
               {paises[0].activities?.map((actividad) => (
-                <table>
+                <table key={actividad.id}>
+                  <tbody>
                     <td></td>
-                  <td className={style.actividad}>
-                    <h5 >{actividad.name}</h5>
-                  </td>
-                  <td></td>
-                  <tr>
-                    <td>
-                      <h5>Duracion: {actividad.time}</h5>
+                    <td className={style.actividad}>
+                      <h5>{actividad.name}</h5>
                     </td>
-                    <td>
-                      <h5>Dificultad: {actividad.level}</h5>
-                    </td>
-                    <td>
-                      <h5>Temporada: {actividad.season}</h5>
-                    </td>
-                  </tr>
+                    <td></td>
+                    <tr>
+                      <td>
+                        <h5>Duracion: {actividad.time}</h5>
+                      </td>
+                      <td>
+                        <h5>Dificultad: {actividad.level}</h5>
+                      </td>
+                      <td>
+                        <h5>Temporada: {actividad.season}</h5>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               ))}
             </h3>

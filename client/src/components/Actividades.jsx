@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import style from "./ActivityCreate.module.css";
 import { useHistory } from "react-router-dom";
-import {Link} from 'react-router-dom'
-
+import { Link } from "react-router-dom";
 
 export default function ActivityCreate() {
   const countries = useSelector((state) => state.allContinentes);
@@ -36,9 +35,9 @@ export default function ActivityCreate() {
         ...activity,
         paises: [...activity.paises, aux[0].id],
       });
-      console.log(activity.paises, "primer pais");
+      //console.log(activity.paises, "primer pais");
     } else {
-      console.log("son mas de uno");
+      //console.log("son mas de uno");
       let flag = false;
       for (let i = 0; i < activity.paises.length; i++) {
         if (activity.paises[i] === aux[0].id) {
@@ -52,7 +51,7 @@ export default function ActivityCreate() {
         });
       }
     }
-    console.log(activity.paises);
+    //console.log(activity.paises);
   }
 
   function borrarPais(id) {
@@ -84,7 +83,7 @@ export default function ActivityCreate() {
         console.log(err);
       }
     }
-    history.push('/home')
+    history.push("/home");
   }
 
   function cancelar() {
@@ -171,29 +170,31 @@ export default function ActivityCreate() {
         </form>
       </div>
       <table key={activity.name} className={style.table}>
-        <label>Paises donde se realiza:</label>
-        <input
-          type="datalist"
-          name="pais"
-          list="paises"
-          value={activity.pais}
-          onChange={(e) => onInputChange(e)}
-        />
-        <datalist id="paises">
-          {countries &&
-            countries.map((e) => <option key={e.id} value={e.name} />)}
-        </datalist>
-        <button onClick={() => agregarPais()}> Agregar Pais</button>
+        <tbody>
+          <label>Paises donde se realiza:</label>
+          <input
+            type="datalist"
+            name="pais"
+            list="paises"
+            value={activity.pais}
+            onChange={(e) => onInputChange(e)}
+          />
+          <datalist id="paises">
+            {countries &&
+              countries.map((e) => <option key={e.id} value={e.name} />)}
+          </datalist>
+          <button onClick={() => agregarPais()}> Agregar Pais</button>
 
-        {activity.paises.map((el) => (
-          <div>
-            {" "}
-            <p> {el} </p>
-            <button key={el.name} value={el} onClick={() => borrarPais(el)}>
-              X
-            </button>
-          </div>
-        ))}
+          {activity.paises.map((el) => (
+            <div>
+              {" "}
+              <p> {el} </p>
+              <button key={el.name} value={el} onClick={() => borrarPais(el)}>
+                X
+              </button>
+            </div>
+          ))}
+        </tbody>
       </table>{" "}
       <br />
       {validate.paises && <h5>{validate.paises}</h5>}
@@ -203,12 +204,9 @@ export default function ActivityCreate() {
       <button onClick={() => cancelar()} className={style.btn}>
         Cancelar
       </button>
-      <Link to={'/Home'}>
-      <button className={style.btn}>
-        Inicio
-      </button>
+      <Link to={"/Home"}>
+        <button className={style.btn}>Inicio</button>
       </Link>
-      
     </div>
   );
 }
