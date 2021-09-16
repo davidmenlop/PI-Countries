@@ -19,7 +19,7 @@ export default function ActivityCreate() {
     paises: [],
   });
 
-  function onInputChange(e) {
+  function onInputChange(e) { // se setea con los valores que recibe del form cuando se afectan los inputs y los select.
     setActivity(() => {
       return {
         ...activity,
@@ -28,7 +28,7 @@ export default function ActivityCreate() {
     });
   }
 
-  function agregarPais() {
+  function agregarPais() {  // para agregar pais filtro los paises
     var aux = countries.filter((e) => e.name === activity.pais);
     if (activity.paises.length === 0) {
       setActivity({
@@ -55,13 +55,15 @@ export default function ActivityCreate() {
   }
 
   function borrarPais(id) {
-    console.log(id, "id de borrar");
+    //console.log(id, "id de borrar");
     setActivity({
       ...activity,
       paises: [...activity.paises.filter((el) => el !== id)],
     });
-    console.log(activity.paises, "ya borrado");
+    //console.log(activity.paises, "ya borrado");
   }
+
+  
   async function handleSubmit(e) {
     e.preventDefault();
     var info = error(activity);
@@ -83,7 +85,7 @@ export default function ActivityCreate() {
         console.log(err);
       }
     }
-    history.push("/home");
+    /* history.push("/home"); */
   }
 
   function cancelar() {

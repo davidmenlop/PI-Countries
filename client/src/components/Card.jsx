@@ -4,7 +4,7 @@ import { detallePais } from "../actions";
 import { Link } from "react-router-dom";
 import style from "./Card.module.css"
 
-export default function Card({ img, name, continent, id }) {
+export default function Card({ img, name, continent, id, population }) {
   const dispatch = useDispatch();
   return (
     <div className={style.tarjeta}>

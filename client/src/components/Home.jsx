@@ -119,7 +119,7 @@ export default function Home() {
               onChange={(e) => handleActivity(e)}
             >
               <option defaultValue value="All">
-                Todas
+                Actividades
               </option>
               {todasActividades?.map((e) => (
                 <option key={e.id} value={e.name}>
@@ -158,6 +158,7 @@ export default function Home() {
                   img={el.flag}
                   continent={el.continent}
                   activities={el.activities}
+              
                 />
                 {/* </Link> */}
               </div>
